@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>index4</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                inputValue: '',
+                list:[]
+            }
+        },
+        methods: {
+            handleAddItem() {
+                this.list.push(this.inputValue);
+                this.inputValue = '';
+            }
+        },
+
+        template: `
+          <input v-model="inputValue">
+          <button v-on:click="handleAddItem">添加</button>
+        <ul>
+        <todo-item v-for="(item, index) of list"
+        v-bind:content="item" v-bind:index="index"
+        />
+        </ul>
+        `
+    });
+
+    app.component('todo-item', {
+        props:['content', 'index'],
+
+        template: '<li>{{index}} -- {{content}}</li>'
+
+    });
+
+    app.mount('#root')
+
+</script>
+</html>
